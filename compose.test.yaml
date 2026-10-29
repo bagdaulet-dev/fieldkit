@@ -1,0 +1,27 @@
+name: fieldkit-tests
+services:
+  db:
+    image: mysql:8.4
+    environment:
+      MYSQL_DATABASE: fieldkit_test
+      MYSQL_USER: fieldkit_test
+      MYSQL_PASSWORD: fieldkit-tests-only
+      MYSQL_ROOT_PASSWORD: fieldkit-tests-root-only
+    ports: ["127.0.0.1:3311:3306"]
+    tmpfs: ["/var/lib/mysql:size=512m"]
+    command:
+      [
+        "--character-set-server=utf8mb4",
+        "--innodb-buffer-pool-size=128M",
+        "--max-connections=50",
+      ]
+    mem_limit: 512m
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          'MYSQL_PWD="$$MYSQL_PASSWORD" mysql -h 127.0.0.1 -u "$$MYSQL_USER" "$$MYSQL_DATABASE" -e "SELECT 1" >/dev/null 2>&1',
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 30
