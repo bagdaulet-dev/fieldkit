@@ -31,7 +31,8 @@ jobs:
       MYSQL_DATABASE: fieldkit_test
       MYSQL_USER: fieldkit_test
       MYSQL_PASSWORD: fieldkit-ci-only
-      MYSQL_SSL_MODE: DISABLED
+      # Fresh MySQL users require a protected full-authentication exchange.
+      MYSQL_SSL_MODE: REQUIRED
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
