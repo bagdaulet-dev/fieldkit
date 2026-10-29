@@ -1,0 +1,1190 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Fieldkit REST API",
+    "version": "0.1.0",
+    "description": "Private browser workspaces for equipment lending. Get /api/session first; preserve its HttpOnly cookie and send its csrfToken as X-CSRF-TOKEN on writes. No automatic write retries or idempotency keys are provided. Availability is verified transactionally."
+  },
+  "servers": [
+    {
+      "url": "/"
+    }
+  ],
+  "paths": {
+    "/api/health": {
+      "get": {
+        "summary": "Database readiness",
+        "operationId": "get_health",
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "default": {
+            "description": "Structured error: 400 malformed, 403 CSRF, 404 absent/not owned, 409 stock/history conflict, 413 body too large, 415 content type, 422 validation, 429 throttle or 503 unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/session": {
+      "get": {
+        "summary": "Create or restore private workspace and receive CSRF token",
+        "operationId": "get_session",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Session"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Structured error: 400 malformed, 403 CSRF, 404 absent/not owned, 409 stock/history conflict, 413 body too large, 415 content type, 422 validation, 429 throttle or 503 unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/demo": {
+      "post": {
+        "summary": "Populate an empty private workspace with fictional samples",
+        "operationId": "post_demo",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Session"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Structured error: 400 malformed, 403 CSRF, 404 absent/not owned, 409 stock/history conflict, 413 body too large, 415 content type, 422 validation, 429 throttle or 503 unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "workspaceSession": [],
+            "csrfToken": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmptyInput"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/dashboard": {
+      "get": {
+        "summary": "Read private stock and loan summaries",
+        "operationId": "get_dashboard",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Dashboard"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Structured error: 400 malformed, 403 CSRF, 404 absent/not owned, 409 stock/history conflict, 413 body too large, 415 content type, 422 validation, 429 throttle or 503 unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "workspaceSession": []
+          }
+        ]
+      }
+    },
+    "/api/export": {
+      "get": {
+        "summary": "Export private workspace records",
+        "operationId": "get_export",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Export"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Structured error: 400 malformed, 403 CSRF, 404 absent/not owned, 409 stock/history conflict, 413 body too large, 415 content type, 422 validation, 429 throttle or 503 unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "workspaceSession": []
+          }
+        ]
+      }
+    },
+    "/api/workspace": {
+      "delete": {
+        "summary": "Delete all owned records and invalidate this session",
+        "operationId": "delete_workspace",
+        "responses": {
+          "204": {
+            "description": "Success"
+          },
+          "default": {
+            "description": "Structured error: 400 malformed, 403 CSRF, 404 absent/not owned, 409 stock/history conflict, 413 body too large, 415 content type, 422 validation, 429 throttle or 503 unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "workspaceSession": [],
+            "csrfToken": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteInput"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/equipment": {
+      "get": {
+        "summary": "List owned equipment",
+        "operationId": "get_equipment",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EquipmentPage"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Structured error: 400 malformed, 403 CSRF, 404 absent/not owned, 409 stock/history conflict, 413 body too large, 415 content type, 422 validation, 429 throttle or 503 unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "workspaceSession": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "search",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "maxLength": 100
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000,
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 50,
+              "default": 20
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": ["ALL", "AVAILABLE", "OUT"]
+            }
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": ["CAMERAS", "AUDIO", "LIGHTING", "COMPUTING", "ACCESSORIES"]
+            }
+          }
+        ]
+      },
+      "post": {
+        "summary": "Create owned equipment",
+        "operationId": "post_equipment",
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Equipment"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Structured error: 400 malformed, 403 CSRF, 404 absent/not owned, 409 stock/history conflict, 413 body too large, 415 content type, 422 validation, 429 throttle or 503 unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "workspaceSession": [],
+            "csrfToken": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EquipmentInput"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/equipment/{id}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      ],
+      "get": {
+        "summary": "Read one owned equipment record",
+        "operationId": "get_equipment_id",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Equipment"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Structured error: 400 malformed, 403 CSRF, 404 absent/not owned, 409 stock/history conflict, 413 body too large, 415 content type, 422 validation, 429 throttle or 503 unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "workspaceSession": []
+          }
+        ]
+      },
+      "put": {
+        "summary": "Replace editable fields of owned equipment",
+        "operationId": "put_equipment_id",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Equipment"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Structured error: 400 malformed, 403 CSRF, 404 absent/not owned, 409 stock/history conflict, 413 body too large, 415 content type, 422 validation, 429 throttle or 503 unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "workspaceSession": [],
+            "csrfToken": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EquipmentInput"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete owned equipment without loan history",
+        "operationId": "delete_equipment_id",
+        "responses": {
+          "204": {
+            "description": "Success"
+          },
+          "default": {
+            "description": "Structured error: 400 malformed, 403 CSRF, 404 absent/not owned, 409 stock/history conflict, 413 body too large, 415 content type, 422 validation, 429 throttle or 503 unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "workspaceSession": [],
+            "csrfToken": []
+          }
+        ]
+      }
+    },
+    "/api/borrowers": {
+      "get": {
+        "summary": "List owned borrowers",
+        "operationId": "get_borrowers",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BorrowerPage"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Structured error: 400 malformed, 403 CSRF, 404 absent/not owned, 409 stock/history conflict, 413 body too large, 415 content type, 422 validation, 429 throttle or 503 unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "workspaceSession": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "search",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "maxLength": 100
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000,
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 50,
+              "default": 20
+            }
+          }
+        ]
+      },
+      "post": {
+        "summary": "Create owned borrower",
+        "operationId": "post_borrowers",
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Borrower"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Structured error: 400 malformed, 403 CSRF, 404 absent/not owned, 409 stock/history conflict, 413 body too large, 415 content type, 422 validation, 429 throttle or 503 unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "workspaceSession": [],
+            "csrfToken": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BorrowerInput"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/borrowers/{id}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      ],
+      "put": {
+        "summary": "Replace editable fields of owned borrower",
+        "operationId": "put_borrowers_id",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Borrower"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Structured error: 400 malformed, 403 CSRF, 404 absent/not owned, 409 stock/history conflict, 413 body too large, 415 content type, 422 validation, 429 throttle or 503 unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "workspaceSession": [],
+            "csrfToken": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BorrowerInput"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete owned borrower without loan history",
+        "operationId": "delete_borrowers_id",
+        "responses": {
+          "204": {
+            "description": "Success"
+          },
+          "default": {
+            "description": "Structured error: 400 malformed, 403 CSRF, 404 absent/not owned, 409 stock/history conflict, 413 body too large, 415 content type, 422 validation, 429 throttle or 503 unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "workspaceSession": [],
+            "csrfToken": []
+          }
+        ]
+      }
+    },
+    "/api/loans": {
+      "get": {
+        "summary": "List private loans and due-date filters",
+        "operationId": "get_loans",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoanPage"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Structured error: 400 malformed, 403 CSRF, 404 absent/not owned, 409 stock/history conflict, 413 body too large, 415 content type, 422 validation, 429 throttle or 503 unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "workspaceSession": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "search",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "maxLength": 100
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000,
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 50,
+              "default": 20
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": ["ALL", "ACTIVE", "OVERDUE", "RETURNED"]
+            }
+          }
+        ]
+      },
+      "post": {
+        "summary": "Atomically create a loan and decrement available stock",
+        "operationId": "post_loans",
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Loan"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Structured error: 400 malformed, 403 CSRF, 404 absent/not owned, 409 stock/history conflict, 413 body too large, 415 content type, 422 validation, 429 throttle or 503 unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "workspaceSession": [],
+            "csrfToken": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoanInput"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/loans/{id}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      ],
+      "get": {
+        "summary": "Read an owned loan",
+        "operationId": "get_loans_id",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Loan"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Structured error: 400 malformed, 403 CSRF, 404 absent/not owned, 409 stock/history conflict, 413 body too large, 415 content type, 422 validation, 429 throttle or 503 unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "workspaceSession": []
+          }
+        ]
+      }
+    },
+    "/api/loans/{id}/return": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      ],
+      "post": {
+        "summary": "Return the entire loan quantity once",
+        "operationId": "post_loans_id_return",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Loan"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Structured error: 400 malformed, 403 CSRF, 404 absent/not owned, 409 stock/history conflict, 413 body too large, 415 content type, 422 validation, 429 throttle or 503 unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "workspaceSession": [],
+            "csrfToken": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmptyInput"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "EquipmentInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "category", "totalQuantity"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 120
+          },
+          "model": {
+            "type": "string",
+            "maxLength": 120
+          },
+          "category": {
+            "type": "string",
+            "enum": ["CAMERAS", "AUDIO", "LIGHTING", "COMPUTING", "ACCESSORIES"]
+          },
+          "location": {
+            "type": "string",
+            "maxLength": 120
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 2000
+          },
+          "totalQuantity": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 1000
+          }
+        }
+      },
+      "BorrowerInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
+          },
+          "team": {
+            "type": "string",
+            "maxLength": 100
+          }
+        }
+      },
+      "LoanInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["equipmentId", "borrowerId", "quantity", "dueDate"],
+        "properties": {
+          "equipmentId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "borrowerId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "quantity": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 1000
+          },
+          "dueDate": {
+            "type": "string",
+            "format": "date",
+            "description": "Today through one year from today, in the configured application time zone."
+          },
+          "notes": {
+            "type": "string",
+            "maxLength": 2000
+          }
+        }
+      },
+      "EmptyInput": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "DeleteInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["confirmation"],
+        "properties": {
+          "confirmation": {
+            "type": "string",
+            "enum": ["DELETE"]
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "required": ["error"],
+        "properties": {
+          "error": {
+            "type": "object",
+            "required": ["code", "message"],
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "Session": {
+        "type": "object",
+        "properties": {
+          "csrfToken": {
+            "type": "string"
+          },
+          "mode": {
+            "type": "string"
+          },
+          "isDemo": {
+            "type": "boolean"
+          },
+          "demoEnabled": {
+            "type": "boolean"
+          }
+        }
+      },
+      "Dashboard": {
+        "type": "object",
+        "description": "Owned equipment/unit totals, active/overdue/returned loans, borrowers, category availability, six active loans and four featured equipment records."
+      },
+      "Export": {
+        "type": "object",
+        "description": "Owned equipment, borrower and loan arrays with exportedAt; excludes session and internal workspace identifiers."
+      },
+      "Equipment": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 120
+          },
+          "model": {
+            "type": "string",
+            "maxLength": 120
+          },
+          "category": {
+            "type": "string",
+            "enum": ["CAMERAS", "AUDIO", "LIGHTING", "COMPUTING", "ACCESSORIES"]
+          },
+          "location": {
+            "type": "string",
+            "maxLength": 120
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 2000
+          },
+          "totalQuantity": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 1000
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "availableQuantity": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "Borrower": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
+          },
+          "team": {
+            "type": "string",
+            "maxLength": 100
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "activeLoans": {
+            "type": "integer"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "Loan": {
+        "type": "object",
+        "properties": {
+          "equipmentId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "borrowerId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "quantity": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 1000
+          },
+          "dueDate": {
+            "type": "string",
+            "format": "date",
+            "description": "Today through one year from today, in the configured application time zone."
+          },
+          "notes": {
+            "type": "string",
+            "maxLength": 2000
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "equipmentName": {
+            "type": "string"
+          },
+          "equipmentModel": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "borrowerName": {
+            "type": "string"
+          },
+          "borrowerTeam": {
+            "type": "string"
+          },
+          "checkedOutAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "returnedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "enum": ["ACTIVE", "OVERDUE", "RETURNED"]
+          }
+        }
+      },
+      "EquipmentPage": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Equipment"
+            }
+          },
+          "page": {
+            "type": "integer"
+          },
+          "pageSize": {
+            "type": "integer"
+          },
+          "totalItems": {
+            "type": "integer"
+          },
+          "totalPages": {
+            "type": "integer"
+          }
+        }
+      },
+      "BorrowerPage": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Borrower"
+            }
+          },
+          "page": {
+            "type": "integer"
+          },
+          "pageSize": {
+            "type": "integer"
+          },
+          "totalItems": {
+            "type": "integer"
+          },
+          "totalPages": {
+            "type": "integer"
+          }
+        }
+      },
+      "LoanPage": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Loan"
+            }
+          },
+          "page": {
+            "type": "integer"
+          },
+          "pageSize": {
+            "type": "integer"
+          },
+          "totalItems": {
+            "type": "integer"
+          },
+          "totalPages": {
+            "type": "integer"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "workspaceSession": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "FIELDKIT_SESSION",
+        "description": "The cookie selects your private workspace; use the same browser/client cookie jar."
+      },
+      "csrfToken": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-CSRF-TOKEN",
+        "description": "Current masked CSRF token from /api/session."
+      }
+    }
+  }
+}
