@@ -1,0 +1,339 @@
+.dialog {
+  border: 1px solid #e3cbc3;
+  background: var(--paper);
+  color: var(--fig);
+  border-radius: 24px;
+  width: 540px;
+  max-width: calc(100% - 32px);
+  max-height: calc(100dvh - 48px);
+  padding: 30px;
+  box-shadow: 0 25px 100px #35253925;
+  overscroll-behavior: contain;
+  overflow-y: auto;
+}
+.dialog::backdrop {
+  background: #35253965;
+  backdrop-filter: blur(5px);
+}
+.dialog-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  gap: 15px;
+  margin-bottom: 12px;
+}
+.dialog-heading h2 {
+  font-size: 30px;
+  letter-spacing: -0.8px;
+  font-weight: 500;
+  margin: 4px 0 0;
+  max-width: 380px;
+}
+.dialog-heading > .icon-button {
+  color: #856a7c;
+  margin-right: -7px;
+}
+.dialog-subtitle {
+  font-size: 12px;
+  color: #7a6072;
+  line-height: 1.8;
+  margin-bottom: 25px;
+}
+.dialog label {
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+  margin-bottom: 18px;
+}
+.dialog label > span {
+  font-weight: 400;
+  font-size: 10px;
+  color: #8a7381;
+  margin-left: 4px;
+}
+.dialog input,
+.dialog select,
+.dialog textarea {
+  display: block;
+  width: 100%;
+  margin-top: 8px;
+  padding: 12px 13px;
+  border: 1px solid #decec5;
+  border-radius: 10px;
+  background: #fff;
+  color: var(--fig);
+  font-size: 13px;
+  line-height: 1.5;
+}
+.dialog input::placeholder,
+.dialog textarea::placeholder {
+  color: #8b7884;
+  font-size: 12px;
+}
+.dialog select {
+  padding-right: 7px;
+}
+.dialog textarea {
+  resize: vertical;
+  min-height: 88px;
+  max-height: 230px;
+}
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 17px;
+}
+.form-grid .wide {
+  grid-column: 1/-1;
+}
+.dialog-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  border-top: 1px solid #e9dcd2;
+  padding-top: 22px;
+  margin-top: 21px;
+}
+.dialog-actions > .icon-button:first-child {
+  margin-right: auto;
+}
+.dialog-actions .button {
+  font-size: 12px;
+  padding: 12px 17px;
+}
+.inline-confirm {
+  background: #f9e9e3;
+  border: 1px solid #e6c7be;
+  border-radius: 12px;
+  padding: 17px;
+  margin-top: 20px;
+  font-size: 12px;
+}
+.inline-confirm > strong {
+  font-size: 14px;
+}
+.inline-confirm p {
+  font-size: 12px;
+  line-height: 1.8;
+  margin: 6px 0 15px;
+  color: #785261;
+}
+.inline-confirm .text-button {
+  margin-left: 15px;
+  font-size: 11px;
+}
+.inline-confirm label {
+  margin-bottom: 13px;
+}
+.availability-hint {
+  margin: -9px 0 22px;
+  font-size: 11px;
+  color: #596f4c;
+}
+.form-note {
+  font-size: 11px;
+  color: #7f6878;
+  line-height: 1.8;
+  margin: 2px 0;
+}
+.gear-details {
+  width: 530px;
+}
+.detail-art {
+  position: relative;
+  background: var(--art-bg);
+  height: 215px;
+  border-radius: 16px;
+  margin: 20px 0 23px;
+  overflow: hidden;
+}
+.detail-art .gear-art {
+  width: 300px;
+  height: 215px;
+  padding: 5px;
+}
+.detail-art > span {
+  position: absolute;
+  left: 18px;
+  bottom: 14px;
+  background: #fff9ecb3;
+  padding: 4px 8px;
+  font-size: 10px;
+  border-radius: 5px;
+}
+.detail-heading h3 {
+  font-size: 31px;
+  font-weight: 500;
+  letter-spacing: -0.6px;
+  margin: 0 0 5px;
+  overflow-wrap: anywhere;
+}
+.detail-heading p {
+  font-size: 12px;
+  color: #7b6070;
+  margin-bottom: 23px;
+  overflow-wrap: anywhere;
+}
+.detail-facts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 19px 14px;
+  margin: 0 0 23px;
+}
+.detail-facts > div {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: #80647a;
+  min-width: 0;
+}
+.detail-facts > div > span {
+  font-size: 10px;
+  min-width: 0;
+}
+.detail-facts strong {
+  display: block;
+  font-size: 12px;
+  font-weight: 550;
+  color: var(--fig);
+  margin-top: 3px;
+  overflow-wrap: anywhere;
+}
+.detail-description {
+  font-size: 13px;
+  line-height: 1.85;
+  color: #6e5366;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  margin-bottom: 10px;
+}
+.loan-detail-heading {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  margin: 26px 0;
+}
+.loan-detail-art {
+  display: block;
+  width: 120px;
+  height: 100px;
+  border-radius: 14px;
+  background: var(--art-bg);
+  flex-shrink: 0;
+  overflow: hidden;
+}
+.loan-detail-art > .gear-art {
+  width: 150px;
+  max-width: none;
+  height: 100px;
+  margin-left: -15px;
+}
+.loan-detail-heading h3 {
+  font-size: 25px;
+  font-weight: 500;
+  margin: 0 0 6px;
+  letter-spacing: -0.6px;
+  overflow-wrap: anywhere;
+}
+.loan-detail-heading p {
+  font-size: 11px;
+  color: #775c6d;
+  margin-bottom: 9px;
+  overflow-wrap: anywhere;
+}
+.borrower-detail {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  border-top: 1px solid #e9dcd2;
+  border-bottom: 1px solid #e9dcd2;
+  padding: 20px 0;
+  margin-bottom: 25px;
+}
+.borrower-detail > div {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.borrower-detail > div > span {
+  font-size: 10px;
+  color: #7d6475;
+}
+.borrower-detail strong {
+  font-size: 14px;
+  margin: 2px 0;
+  overflow-wrap: anywhere;
+}
+.borrower-detail small {
+  font-size: 11px;
+  color: #7d6475;
+  overflow-wrap: anywhere;
+}
+.detail-notes-title {
+  font-size: 12px;
+  margin: 6px 0 10px;
+  font-weight: 600;
+}
+.return-note {
+  display: flex;
+  gap: 11px;
+  align-items: center;
+  background: #f5eddb;
+  border-radius: 12px;
+  font-size: 12px;
+  padding: 17px 18px;
+  line-height: 1.8;
+  color: #6c5667;
+}
+.return-note svg {
+  color: #7c6851;
+}
+.workspace-info {
+  display: flex;
+  gap: 14px;
+  align-items: start;
+  background: #f3eee0;
+  border-radius: 13px;
+  padding: 19px;
+  color: #71556a;
+  margin: 0 0 22px;
+}
+.workspace-info p {
+  font-size: 11px;
+  line-height: 1.9;
+  margin: 0;
+}
+.workspace-info svg {
+  color: #82724d;
+}
+.workspace-option {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  width: 100%;
+  background: transparent;
+  text-align: left;
+  padding: 18px 3px;
+  border-bottom: 1px solid #eee2d7;
+}
+.workspace-option:hover {
+  background: #f7efd777;
+}
+.workspace-option > span {
+  min-width: 0;
+}
+.workspace-option strong {
+  display: block;
+  font-size: 13px;
+  font-weight: 550;
+}
+.workspace-option small {
+  display: block;
+  font-size: 10px;
+  color: #7a6474;
+  margin-top: 5px;
+}
+.workspace-dialog .inline-confirm > p {
+  margin-top: 0;
+}
