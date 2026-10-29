@@ -1,0 +1,158 @@
+@media (max-width: 359px) {
+  .main-content {
+    padding: 0 16px;
+  }
+  .header-inner {
+    padding: 0 17px;
+  }
+  .hero-copy h1 {
+    font-size: 47px;
+    letter-spacing: -2.5px;
+  }
+  .hero-intro {
+    font-size: 9px;
+  }
+  .hero-buttons {
+    gap: 12px;
+  }
+  .hero-buttons .button {
+    font-size: 9px;
+    padding: 12px 11px;
+  }
+  .hero-library-link {
+    font-size: 8px;
+  }
+  .gear-shelf {
+    height: 260px;
+  }
+  .shelf-camera {
+    width: 177px;
+    height: 170px;
+    left: 26%;
+  }
+  .shelf-camera .gear-art {
+    width: 181px;
+  }
+  .shelf-audio {
+    width: 99px;
+    height: 114px;
+    top: 120px;
+    left: 0;
+  }
+  .shelf-audio .gear-art {
+    width: 117px;
+    height: 94px;
+  }
+  .shelf-laptop {
+    width: 108px;
+    height: 99px;
+    top: 145px;
+    right: 0;
+  }
+  .shelf-laptop .gear-art {
+    width: 123px;
+    height: 101px;
+  }
+  .shelf-sticker {
+    font-size: 7px;
+    padding: 5px 7px;
+  }
+  .overview-summary strong {
+    font-size: 32px;
+  }
+  .overview-summary > button > span {
+    font-size: 9px;
+  }
+  .overview-summary small {
+    font-size: 7px;
+    max-width: 85px;
+  }
+  .overview-summary > button {
+    gap: 10px;
+  }
+  .workspace-meta > span:last-child {
+    font-size: 7px;
+  }
+  .shelf-status {
+    grid-template-columns: 128px 1fr;
+  }
+  .shelf-status > .section-heading {
+    left: 139px;
+  }
+  .shelf-status h2 {
+    font-size: 16px;
+  }
+  .stock-ring > svg {
+    width: 124px;
+    height: 124px;
+  }
+  .stock-ring strong {
+    font-size: 26px;
+  }
+  .shelf-key {
+    font-size: 7px;
+    gap: 6px;
+  }
+  .featured-grid .gear-picture {
+    height: 112px;
+  }
+  .featured-grid .gear-title {
+    font-size: 14px;
+  }
+  .featured-grid .gear-card-copy {
+    padding: 12px 9px 8px;
+  }
+  .featured-grid .gear-card-bottom {
+    gap: 3px;
+  }
+  .featured-grid .stock-label {
+    font-size: 6px;
+  }
+  .featured-grid .gear-borrow {
+    width: 21px;
+    height: 21px;
+  }
+  .featured-section > .section-heading h2 {
+    font-size: 19px;
+  }
+  .featured-section > .section-heading .text-button {
+    font-size: 8px;
+  }
+  .loan-badge {
+    font-size: 6px;
+  }
+  .overview-loans .loan-badge {
+    font-size: 6px;
+  }
+  .overview-loans .loan-item-button strong {
+    font-size: 9px;
+  }
+  .overview-loans .loan-item-button small {
+    font-size: 7px;
+  }
+  .overview-loans .loan-table td {
+    font-size: 8px;
+  }
+  .dialog {
+    padding: 22px 18px;
+  }
+  .dialog-heading h2 {
+    font-size: 26px;
+  }
+  .dialog-actions .button {
+    font-size: 10px;
+    padding: 11px 12px;
+  }
+  .view-heading h1 {
+    font-size: 33px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
