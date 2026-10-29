@@ -1,0 +1,86 @@
+name: Verify Fieldkit
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_call:
+permissions:
+  contents: read
+concurrency:
+  group: verify-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    services:
+      mysql:
+        image: mysql:8.4
+        env:
+          MYSQL_ROOT_PASSWORD: fieldkit-ci-root-only
+          MYSQL_DATABASE: fieldkit_test
+          MYSQL_USER: fieldkit_test
+          MYSQL_PASSWORD: fieldkit-ci-only
+        ports: ["3306:3306"]
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 --silent"
+          --health-interval=5s --health-timeout=5s --health-retries=30
+    env:
+      MYSQL_HOST: 127.0.0.1
+      MYSQL_PORT: "3306"
+      MYSQL_DATABASE: fieldkit_test
+      MYSQL_USER: fieldkit_test
+      MYSQL_PASSWORD: fieldkit-ci-only
+      MYSQL_SSL_MODE: DISABLED
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-java@b843ebf9b913146b38da2eaa7aeddf76074ae1ad # v6.1.0
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: maven
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: "24"
+          cache: npm
+      - run: npm install --global npm@11.19.0 --ignore-scripts
+      - run: npm ci --ignore-scripts
+      - run: npm run format:check
+      - run: npm run build
+      - name: Prevent credentials and private files from being published
+        run: python3 scripts/check-secrets.py
+      - name: Preview tests, restart regression and formatting
+        run: ./mvnw -B -ntp fmt:check verify
+      - name: MySQL API and concurrency tests
+        run: ./mvnw -B -ntp test
+        env:
+          TEST_STORAGE: mysql
+      - run: npm audit --audit-level=high
+      - run: python3 scripts/audit-maven.py
+      - name: Install pinned Chromium
+        run: npx --no-install playwright install chromium
+        timeout-minutes: 5
+      - name: Browser journey
+        run: |
+          java -Xms64m -Xmx256m -jar target/fieldkit.jar --spring.profiles.active=preview --debug=false > /tmp/fieldkit.log 2>&1 &
+          for attempt in $(seq 1 30); do
+            if curl --fail --silent http://127.0.0.1:8082/api/health > /dev/null; then break; fi
+            sleep 1
+          done
+          npm run test:browser
+        env:
+          BROWSER_CHANNEL: chromium
+      - run: docker build -t fieldkit:ci .
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: verification-artifacts
+          path: |
+            target/site/jacoco/
+            target/surefire-reports/*.xml
+            target/dependency-audit.json
+            docs/screenshots/*.png
+          retention-days: 7
