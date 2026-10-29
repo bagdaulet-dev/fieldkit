@@ -1,0 +1,216 @@
+@media (max-width: 900px) {
+  .header-inner {
+    gap: 20px;
+    height: 81px;
+  }
+  .site-header .brand {
+    font-size: 27px;
+  }
+  .site-header nav a {
+    font-size: 11px;
+    padding: 9px 10px;
+  }
+  .workspace-switch > span:nth-child(2) {
+    display: none;
+  }
+  .workspace-switch {
+    padding-left: 0;
+  }
+  .workspace-icon {
+    height: 33px;
+    width: 33px;
+  }
+  .hero-copy h1 {
+    font-size: 62px;
+  }
+  .hero-copy > p:not(.hero-intro) {
+    font-size: 12px;
+  }
+  .hero-intro {
+    font-size: 10px;
+  }
+  .hero-buttons {
+    align-items: start;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .overview-hero {
+    min-height: 360px;
+    grid-template-columns: 1fr 1fr;
+  }
+  .gear-shelf {
+    scale: 0.89;
+    transform-origin: right center;
+  }
+  .shelf-camera {
+    left: 20%;
+  }
+  .shelf-laptop {
+    right: 0;
+  }
+  .shelf-audio {
+    left: -9%;
+  }
+  .overview-summary {
+    padding: 23px 0;
+  }
+  .overview-summary > button {
+    gap: 8px;
+    padding: 0 12px;
+  }
+  .overview-summary strong {
+    font-size: 30px;
+  }
+  .overview-summary > button > span {
+    font-size: 9px;
+  }
+  .overview-summary small {
+    max-width: 98px;
+    line-height: 1.7;
+    font-size: 8px;
+  }
+  .overview-grid {
+    grid-template-columns: 1fr;
+  }
+  .overview-loans .loan-table td {
+    padding-top: 18px;
+    padding-bottom: 18px;
+  }
+  .overview-loans .loan-thumbnail {
+    display: block;
+  }
+  .overview-loans .loan-item-button strong {
+    font-size: 12px;
+  }
+  .overview-loans .loan-item-button small {
+    font-size: 10px;
+  }
+  .overview-loans .borrower-inline .avatar {
+    display: inline-flex;
+  }
+  .overview-loans .loan-table td {
+    font-size: 11px;
+  }
+  .overview-loans .return-link span {
+    display: inline;
+  }
+  .shelf-status {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    position: relative;
+    padding: 17px 20px 17px 12px;
+    min-height: 209px;
+  }
+  .shelf-status > .section-heading {
+    position: absolute;
+    top: 16px;
+    left: 190px;
+    right: 20px;
+    padding: 0;
+  }
+  .shelf-status h2 {
+    font-size: 21px;
+  }
+  .stock-ring {
+    height: 177px;
+    grid-row: 1/3;
+  }
+  .stock-ring > svg {
+    width: 163px;
+    height: 163px;
+  }
+  .stock-ring strong {
+    font-size: 33px;
+  }
+  .shelf-key {
+    grid-column: 2;
+    justify-content: start;
+    align-self: end;
+    padding-bottom: 6px;
+    font-size: 10px;
+    margin-top: 39px;
+  }
+  .category-breakdown {
+    grid-column: 2;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 18px;
+  }
+  .category-breakdown > div {
+    padding: 6px 0;
+  }
+  .featured-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+  }
+  .featured-grid .gear-picture {
+    height: 186px;
+  }
+  .featured-grid .gear-title {
+    font-size: 21px;
+  }
+  .featured-grid .gear-card-copy {
+    padding: 17px 19px 12px;
+  }
+  .featured-grid .stock-label {
+    font-size: 10px;
+  }
+  .equipment-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .gear-picture {
+    height: 191px;
+  }
+  .view-heading h1 {
+    font-size: 34px;
+  }
+  .view-heading > div > p:last-child {
+    font-size: 12px;
+  }
+  .view-heading .button {
+    font-size: 11px;
+    padding: 12px 14px;
+  }
+  .category-tabs > button {
+    font-size: 11px;
+    padding: 9px 12px;
+  }
+  .loan-table th:nth-child(4),
+  .loan-table td:nth-child(4) {
+    display: none;
+  }
+  .loan-table th:first-child {
+    width: 33%;
+  }
+  .loan-table th:nth-child(2) {
+    width: 25%;
+  }
+  .loan-table th:nth-child(3) {
+    width: 14%;
+  }
+  .loan-table th:nth-child(5) {
+    width: 16%;
+  }
+  .loan-table th:last-child {
+    width: 12%;
+  }
+  .loan-table td:first-child,
+  .loan-table th:first-child {
+    padding-left: 18px;
+  }
+  .loan-table th,
+  .loan-table td {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+  .return-link {
+    font-size: 9px;
+  }
+  .loan-badge {
+    font-size: 8px;
+  }
+  .site-footer {
+    margin-top: 35px;
+  }
+}
