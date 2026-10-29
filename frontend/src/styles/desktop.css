@@ -1,0 +1,257 @@
+@media (min-width: 1600px) {
+  .main-content,
+  .header-inner {
+    max-width: 1480px;
+    padding-left: 50px;
+    padding-right: 50px;
+  }
+  .overview-hero {
+    min-height: 445px;
+    grid-template-columns: 1.1fr 1fr;
+  }
+  .hero-copy h1 {
+    font-size: 92px;
+  }
+  .gear-shelf {
+    width: 540px;
+    justify-self: end;
+  }
+  .gear-picture {
+    height: 235px;
+  }
+  .featured-grid .gear-picture {
+    height: 190px;
+  }
+  .overview-grid {
+    grid-template-columns: minmax(0, 1fr) 310px;
+  }
+  .overview-loans .loan-table td {
+    font-size: 11px;
+  }
+  .overview-loans .loan-item-button strong {
+    font-size: 12px;
+  }
+  .overview-loans .loan-item-button small {
+    font-size: 10px;
+  }
+}
+@media (max-width: 1180px) {
+  .header-inner {
+    gap: 30px;
+    padding: 0 28px;
+  }
+  .site-header nav {
+    gap: 1px;
+  }
+  .site-header nav a {
+    padding: 10px 12px;
+    font-size: 12px;
+  }
+  .workspace-switch > svg {
+    display: none;
+  }
+  .workspace-switch {
+    gap: 9px;
+  }
+  .main-content {
+    padding: 0 28px;
+  }
+  .overview-hero {
+    gap: 5px;
+    min-height: 370px;
+    padding-top: 30px;
+  }
+  .hero-copy h1 {
+    font-size: 69px;
+    letter-spacing: -3px;
+  }
+  .hero-copy > p:not(.hero-intro) {
+    font-size: 13px;
+  }
+  .hero-buttons {
+    gap: 15px;
+  }
+  .hero-buttons .button {
+    font-size: 12px;
+    padding: 13px 15px;
+  }
+  .hero-library-link {
+    font-size: 11px;
+  }
+  .gear-shelf {
+    height: 300px;
+  }
+  .shelf-camera {
+    width: 215px;
+    height: 212px;
+    left: 28%;
+  }
+  .shelf-camera .gear-art {
+    width: 217px;
+  }
+  .shelf-audio {
+    width: 126px;
+    height: 145px;
+    left: 0;
+    top: 115px;
+  }
+  .shelf-audio .gear-art {
+    width: 143px;
+    height: 124px;
+  }
+  .shelf-laptop {
+    width: 141px;
+    height: 129px;
+    right: -3%;
+    top: 145px;
+  }
+  .shelf-laptop .gear-art {
+    width: 164px;
+    height: 131px;
+  }
+  .shelf-sticker {
+    font-size: 9px;
+  }
+  .spark-one {
+    font-size: 27px;
+    left: 9%;
+  }
+  .spark-two {
+    right: 1%;
+  }
+  .overview-summary > button {
+    gap: 12px;
+    padding: 0 17px;
+  }
+  .overview-summary strong {
+    font-size: 35px;
+  }
+  .overview-summary > button > span {
+    font-size: 10px;
+  }
+  .overview-summary small {
+    font-size: 8px;
+  }
+  .overview-grid {
+    grid-template-columns: minmax(0, 1fr) 244px;
+    gap: 20px;
+  }
+  .section-heading {
+    padding-left: 19px;
+    padding-right: 19px;
+  }
+  .section-heading h2 {
+    font-size: 20px;
+  }
+  .shelf-status h2 {
+    font-size: 18px;
+  }
+  .shelf-key {
+    gap: 10px;
+    font-size: 9px;
+  }
+  .category-breakdown {
+    padding: 0 20px;
+  }
+  .overview-loans .loan-table th:nth-child(4),
+  .overview-loans .loan-table td:nth-child(4) {
+    display: none;
+  }
+  .overview-loans .loan-table th:first-child {
+    width: 37%;
+  }
+  .overview-loans .loan-table th:nth-child(2) {
+    width: 23%;
+  }
+  .overview-loans .loan-table th:nth-child(3) {
+    width: 13%;
+  }
+  .overview-loans .loan-table th:nth-child(5) {
+    width: 17%;
+  }
+  .overview-loans .loan-table th:last-child {
+    width: 10%;
+  }
+  .overview-loans .return-link span {
+    display: none;
+  }
+  .overview-loans .loan-thumbnail {
+    display: none;
+  }
+  .overview-loans .loan-item-button strong {
+    font-size: 11px;
+  }
+  .overview-loans .loan-item-button small {
+    font-size: 9px;
+  }
+  .overview-loans .loan-table td {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+  .overview-loans .loan-table td:first-child,
+  .overview-loans .loan-table th:first-child {
+    padding-left: 19px;
+  }
+  .featured-grid {
+    gap: 15px;
+  }
+  .featured-grid .gear-picture {
+    height: 149px;
+  }
+  .featured-grid .gear-title {
+    font-size: 16px;
+  }
+  .featured-grid .gear-card-copy {
+    padding: 15px 13px 10px;
+  }
+  .featured-grid .stock-label {
+    font-size: 8px;
+  }
+  .featured-grid .gear-borrow {
+    width: 25px;
+    height: 25px;
+  }
+  .equipment-grid {
+    gap: 20px;
+  }
+  .gear-picture {
+    height: 183px;
+  }
+  .gear-title {
+    font-size: 19px;
+  }
+  .view-heading h1 {
+    font-size: 39px;
+  }
+  .people-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .person-card {
+    padding: 21px;
+  }
+  .loan-table td {
+    font-size: 10px;
+  }
+  .loan-item-button strong {
+    font-size: 11px;
+  }
+  .borrower-inline .avatar {
+    width: 25px;
+    height: 25px;
+    font-size: 8px;
+  }
+  .loan-thumbnail {
+    width: 40px;
+    height: 39px;
+  }
+  .loan-thumbnail > .gear-art {
+    height: 45px;
+    width: 58px;
+  }
+  .loan-table th:first-child {
+    width: 31%;
+  }
+  .loan-table th:nth-child(2) {
+    width: 24%;
+  }
+}
